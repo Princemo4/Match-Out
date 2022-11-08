@@ -1,0 +1,14 @@
+body {
+    text-align: center;
+}
+.game-title {
+    color: blue;
+}
+.btn {
+    color: white;
+    padding: 20px;
+    align-items: center;
+}
+.btn-play{
+    background-color: purple;
+}
