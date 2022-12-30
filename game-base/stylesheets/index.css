@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: consolas, monospace;
     margin-top: 10%;
     margin-bottom: 20px;
     background-color: aquamarine;
@@ -21,6 +21,7 @@ body {
     cursor: pointer;
     text-decoration: none;
     width: 40%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .btn:active {
   background-color: #16bc13;
