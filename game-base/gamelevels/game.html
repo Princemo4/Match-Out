@@ -85,7 +85,15 @@
             }
         })
         
-        
+
+        // A couple of problems with this function
+        // 1. You created it but never called it. When is this supposed to be called?
+        //   * perhaps every time the correct selection is clicked
+        // 2. Naming a function as a question (e.g.  isThisTrue) tells me that it only checks a condition but doesn't actually do anything, it only returns True or False.  
+        //   * This function does a window.location.href, so it's changing something, not just checking a condition. 
+        //   * I would rename this function to something like  "nextLevelIfComplete" or something like that.
+        // 3. You return true before you do the window.location.href, which means it will never get to the window.location.href.  
+        //   * You should return true after the window.location.href
         function isLevelComplete() {
             let areas = document.getElementByTagName('area')
 
