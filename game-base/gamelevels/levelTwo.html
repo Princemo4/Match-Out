@@ -31,8 +31,8 @@
 
     </script>
     <script>
-        //Score logic. for now, we'll set each correct answer to 
          imageMapResize();
+         islevelComplete();
         //timer
         let timer = document.getElementById('timer')
         let seconds = 0
@@ -46,7 +46,7 @@
                 seconds = 0;
                 mins++
             }
-
+            
             timer.innerHTML = `${mins}:${seconds}`;
             seconds = pad(seconds);
             mins = pad(mins);
@@ -57,14 +57,10 @@
 
         //image map
         let correct1 = document.getElementById('correct1')
-        //let areasCollection = document.getElementsByTagName('area')
-        /* let areas = Array.from(areasCollection)
-        let game_image = document.getElementById('left-image')
-        game_image.addEventListener('click', */
+        
         let areasCollection = document.getElementsByTagName('button')
         let areas = Array.from(areasCollection)
-        let areasLeftUnclicked = areas.length
-        game_image = document.getElementById('testContainer')
+        let game_image = document.getElementById('testContainer')
         game_image.addEventListener('click',
          function (x) {
             console.log("image map worked")
@@ -73,10 +69,6 @@
                     console.log("you already clicked bum bum")
                     return true
                 }else{
-                    areasLeftUnclicked--
-                    if(areasLeftUnclicked === 0){
-                        window.location.href = "levelTwo.html"
-                    }
                     console.log("correct answer found")
                 }
                 x.path[0].setAttribute('found', 'true')
@@ -91,6 +83,16 @@
             }
         })
         
+        
+        function isLevelComplete() {
+            let areas = document.getElementByTagName('area')
+            if (correct1.disabled) {
+                window.location.href = "levelThree.html";
+                return true
+            } else {
+                return false
+            }
+        }
      
     </script>
 </body>
