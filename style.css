@@ -1,0 +1,66 @@
+
+
+.icon-flipped {
+  transform: rotate(10deg);
+}
+
+.box {
+  width: 40%;
+  height: 100%;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-10px, 0);
+  }
+
+  20% {
+    transform: translate(10px, 0);
+  }
+
+  30% {
+    transform: translate(-10px, 0);
+  }
+
+  40% {
+    transform: translate(10px, 0);
+  }
+
+  50% {
+    transform: translate(-10px, 0);
+  }
+
+  60% {
+    transform: translate(10px, 0);
+  }
+
+  70% {
+    transform: translate(-10px, 0);
+  }
+
+  80% {
+    transform: translate(10px, 0);
+  }
+
+  90% {
+    transform: translate(-10px, 0);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
