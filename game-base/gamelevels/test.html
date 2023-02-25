@@ -20,17 +20,47 @@
            <area id="glove" alt="HERE!!" href="#" title="glove" shape="rect" coords="900,700,994,800" />
        </map>
        
-       <button id="correct1">found it</button>
-       <h2>INCORRECT</h2>
     </div> 
     
-    <script src="../image_resizer.js">
+    <!-- <script src="../image_resizer.js">
 
-    </script>
+    </script> -->
     <script>
         let area = document.getElementById('glove');
+        let entireContainer = document.getElementById('testContainer');
+        let rect = area.getBoundingClientRect();
+        entireContainer.addEventListener('click', (event) => {
+            let clickedX = event.offsetX - rect.left;
+            let clickedY = event.offsetY - rect.top;
+
+            if (clickedX >= 900 && clickedX <= 994 && clickedY >= 700 && clickedY <= 800) {
+                console.log("correct");
+            } else {
+                console.log("incorrect");
+            }
+        })
     </script>
     <script>
+        //timer
+        let timer = document.getElementById('timer')
+        let seconds = 0
+        let mins = 0
+        setInterval( function() {
+            seconds++ 
+            timer.innerHTML = `${mins}:${seconds}`;
+            if (seconds > 59){
+                seconds = 0;
+                mins++
+            }
+
+            timer.innerHTML = `${mins}:${seconds}`;
+            seconds = pad(seconds);
+            mins = pad(mins);
+             function pad(unit){
+                return (("0") + unit).length > 2 ? unit: "0" + unit
+            }
+        }, 1000)
+
         let errors = document.getElementById('errors')
         let lives = 3
         let correct_areas = Array.from(document.getElementsByTagName('button'))
@@ -61,19 +91,15 @@
                 console.log("wrong")
                 lives = lives - 1
                 errors.innerHTML = lives
+                isGameOver()
             }
         })
-       
-        function nameOfFunction(functionParameter1, functionParameter2) {
-
-        }
         function isGameOver(){
-            if (lives === 0){
+                    if (lives === 0){
                     console.log("game over");
                     window.location.href = "../gameOver.html"
-            }
         }
-     
+    }
     </script>
 </body>
 </html>
