@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-level = sessionStorage.getItem('level') || 1
+let level = sessionStorage.getItem('level') || 1
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
@@ -97,6 +97,21 @@ function showScoreboard() {
   if (scoreboard === null) {
     scoreElement.innerHTML = 'No scores yet'
     localStorage.setItem('scoreboard', JSON.stringify([]))
+  } else {
+    let currentScore = scoreboard.find( score => {
+      return score.username === username
+    })
+    // show the 3 highest scores
+    scoreboard.sort( (a, b) => {
+      return b.score - a.score
+    })
+    scoreboard = scoreboard.slice(0, 3)
+    let scoreboardHTML = scoreboard.map( (score) => {
+      return `<li>${score.username}: ${score.score}</li>`
+    })
+    scoreElement.innerHTML = `<h3>Highest Scores</h3>`
+    scoreElement.innerHTML += `<ol>${scoreboardHTML.join('')}</ol>`
+
   }
 }
 
@@ -104,15 +119,27 @@ function calculateScore(latestLevel, timeLeft) {
   let levelScore = (latestLevel * 1000) + (timeLeft * 100)
   let username = sessionStorage.getItem('username')
   let currentScores = JSON.parse(localStorage.getItem('scoreboard')) || []
+  let scoreEntry;
 
   let currentScore = currentScores.find( (score) => {
     return score.username === username
   })
-  currentScore = currentScore || {username, score: 0}
-  score = levelScore + currentScore.score
-  let scoreEntry = [...currentScores, {username, score}]
+  if (currentScore === undefined) {
+    currentScore = {username, score: 0}
+    scoreEntry = [...currentScores, {username, score: levelScore}]
+  } else {
+    score = levelScore + currentScore.score
+    currentScores[currentScores.indexOf(currentScore)] = {username, score }
+    scoreEntry = currentScores
+  }
   localStorage.setItem('scoreboard', JSON.stringify(scoreEntry))
 
+}
+
+function logout() {
+  sessionStorage.removeItem('username')
+  sessionStorage.removeItem('level')
+  location.reload()
 }
 
 function main() {
@@ -120,6 +147,9 @@ function main() {
   showScoreboard()
   createImages()
   resizeImagesBasedOnLevel()
+  if (level > 3) {
+    setInterval(shiftIconPosition, 2000)
+  }
   testbox.addEventListener('click', function (event) {
     console.log(event.target)
     if (event.target === winningIcon) {
@@ -147,6 +177,7 @@ function main() {
       location.reload();
     }
   })
+
   startTimer()
 
 }
