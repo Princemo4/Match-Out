@@ -20,6 +20,7 @@ function startTimer() {
       alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
+      resetCurrentScore()
       location.reload();
     }
   }, 1000)
@@ -91,7 +92,7 @@ function getusername() {
 }
 
 function showScoreboard() {
-  let scoreElement = document.querySelector('#score')
+  let scoreElement = document.querySelector('#scoreboard')
   console.log('showing scoreboard', scoreElement)
   let username = sessionStorage.getItem('username')
   let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
@@ -110,7 +111,7 @@ function showScoreboard() {
     let scoreboardHTML = scoreboard.map( (score) => {
       return `<i>${score.username}: ${score.score}</i> <hr>`
     })
-    scoreElement.innerHTML = `<hr><br><h4>Highest Scores</h4><hr>`
+    scoreElement.innerHTML = `<hr><h3>Highest Scores</h3>`
     scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
 
   }
@@ -157,9 +158,21 @@ function logout() {
   location.reload()
 }
 
+function displayCurrentScore() {
+  let scoreElement = document.querySelector('#score')
+  let currentScore = sessionStorage.getItem('score')
+  scoreElement.innerHTML = `<h4>Current Score: ${currentScore}</h4>`
+}
+
+function resetCurrentScore() {
+  sessionStorage.setItem('score', 0)
+  return true;
+}
+
 function main() {
   getusername()
   showScoreboard()
+  displayCurrentScore()
   createImages()
   resizeImagesBasedOnLevel()
   if (level > 3) {
@@ -169,8 +182,8 @@ function main() {
     console.log(event.target)
     if (event.target === winningIcon) {
       clearInterval(interval)
-      alert('You win!')
       calculateScore(level, document.querySelector('#timer').innerHTML)
+      alert('You win!')
       level++
       sessionStorage.setItem('level', level)
       // reload page
@@ -189,6 +202,7 @@ function main() {
       alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
+      resetCurrentScore()
       location.reload();
     }
   })

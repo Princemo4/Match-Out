@@ -20,6 +20,11 @@
 
 }
 
+.blurred {
+  filter: blur(60px);
+
+}
+
 .box {
 
   display: inline-block;
