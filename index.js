@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-level = sessionStorage.getItem('level') || 1
+let level = sessionStorage.getItem('level') || 1
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
@@ -8,6 +8,10 @@ let lives = 3
 let finalIcons = []
 let interval;
 
+function displayStatus(){
+  let levelShown =  document.getElementById('level')
+  levelShown.innerHTML = level
+}
 function startTimer() {
   let timer = document.querySelector('#timer')
   let time = 30
@@ -117,6 +121,7 @@ function calculateScore(latestLevel, timeLeft) {
 
 function main() {
   getusername()
+  displayStatus()
   showScoreboard()
   createImages()
   resizeImagesBasedOnLevel()
@@ -134,6 +139,8 @@ function main() {
       icon = event.target
       icon.classList.add('shake');
       lives--;
+      let livesLeft = document.getElementById('lives')
+      livesLeft.innerHTML = lives
       setTimeout(function () {
         icon.classList.remove('shake');
       }, 500); 
@@ -141,9 +148,9 @@ function main() {
     }
 
     if (lives === 0) {
-      alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
+      window.location.href = "game_over.html";
       location.reload();
     }
   })
