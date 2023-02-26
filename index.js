@@ -92,9 +92,10 @@ function getusername() {
 
 function showScoreboard() {
   let scoreElement = document.querySelector('#score')
+  console.log('showing scoreboard', scoreElement)
   let username = sessionStorage.getItem('username')
   let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
-  if (scoreboard === null) {
+  if (scoreboard === null || scoreboard.length === 0) {
     scoreElement.innerHTML = 'No scores yet'
     localStorage.setItem('scoreboard', JSON.stringify([]))
   } else {
@@ -107,32 +108,46 @@ function showScoreboard() {
     })
     scoreboard = scoreboard.slice(0, 3)
     let scoreboardHTML = scoreboard.map( (score) => {
-      return `<li>${score.username}: ${score.score}</li>`
+      return `<i>${score.username}: ${score.score}</i> <hr>`
     })
-    scoreElement.innerHTML = `<h3>Highest Scores</h3>`
-    scoreElement.innerHTML += `<ol>${scoreboardHTML.join('')}</ol>`
+    scoreElement.innerHTML = `<hr><br><h4>Highest Scores</h4><hr>`
+    scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
 
   }
 }
 
 function calculateScore(latestLevel, timeLeft) {
-  let levelScore = (latestLevel * 1000) + (timeLeft * 100)
   let username = sessionStorage.getItem('username')
-  let currentScores = JSON.parse(localStorage.getItem('scoreboard')) || []
-  let scoreEntry;
-
-  let currentScore = currentScores.find( (score) => {
+  let scoreboard = JSON.parse(localStorage.getItem('scoreboard')) || []
+  let userScoreboardEntry = scoreboard.find( score => {
     return score.username === username
-  })
-  if (currentScore === undefined) {
-    currentScore = {username, score: 0}
-    scoreEntry = [...currentScores, {username, score: levelScore}]
-  } else {
-    score = levelScore + currentScore.score
-    currentScores[currentScores.indexOf(currentScore)] = {username, score }
-    scoreEntry = currentScores
+  }) 
+  
+  if (userScoreboardEntry === undefined) {
+    userScoreboardEntry = {
+      username: username,
+      score: 0
+    }
+    scoreboard.push(userScoreboardEntry)
+    localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
   }
-  localStorage.setItem('scoreboard', JSON.stringify(scoreEntry))
+  let lastLevelScore = (level * 1000) + (timeLeft * 100)
+  let sessionScore = (parseInt(sessionStorage.getItem('score')) || 0) + lastLevelScore
+  sessionStorage.setItem('score', sessionScore)
+
+  if (sessionScore > userScoreboardEntry.score) {
+    userScoreboardEntry.score = sessionScore
+    console.log('scoreboard', scoreboard)
+    scoreboard.map( score => {
+      if (score.username === username) {
+        score.score = sessionScore
+      }
+      return score
+    })
+    localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
+
+  }
+
 
 }
 
