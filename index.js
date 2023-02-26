@@ -24,7 +24,7 @@ function startTimer() {
       alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
-      location.reload();
+      location.href = "./game_over.html"
     }
   }, 1000)
 }
@@ -119,6 +119,10 @@ function calculateScore(latestLevel, timeLeft) {
 
 }
 
+function changeBackground(){
+
+}
+
 function main() {
   getusername()
   displayStatus()
@@ -134,7 +138,7 @@ function main() {
       level++
       sessionStorage.setItem('level', level)
       // reload page
-      location.reload()
+      location.reload();
     } else {
       icon = event.target
       icon.classList.add('shake');
@@ -150,8 +154,8 @@ function main() {
     if (lives === 0) {
       level = 1
       sessionStorage.setItem('level', level)
-      window.location.href = "game_over.html";
-      location.reload();
+      location.href = "./game_over.html"
+
     }
   })
   startTimer()
