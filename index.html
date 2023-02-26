@@ -7,91 +7,23 @@
 <body>
     <h1>My First Web Page</h1>
     <p>My first paragraph.</p>
-    <div class="container">
-      <div id="baseline" class="box">
+    <div class="row">
+      <!-- scoreboard -->
 
+      <div class="box">
+        <h2>Scoreboard</h2>
+        <p>Score: <span id="score">0</span></p>
+        <p>High Score: <span id="high-score">0</span></p>
       </div>
+    </div>
+    <div id="row">
+      <p>Time Left: <span id="timer"></span></p>
+    </div>
+    <div id="game-row" class="row">
       <div id="testbox" class="box">
 
       </div>  
     </div>
-
-
-
-    <i data-feather="cirlce"></i>
-    <script src="feather.js"></script>
-    <script>feather.replace()</script>
-    <script>
-      let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
-      // let sampleIcons = ['smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf', 'smurf']
-
-      let baselineBoxImages = []
-      level = sessionStorage.getItem('level') || 1
-      let numberOfIcons = level * 3
-
-      // create img elements for each icon
-      // add them to the DOM
-      // add event listeners to each icon
-      // when clicked, check if it's the winning icon
-      // if it is, alert the user that they won
-
-      function createImages() {
-        let randomWinningIcon = Math.floor(Math.random() * numberOfIcons)
-        let randomCombination = sampleIcons.sort(() => Math.random() - 0.5)
-        // clear the current images
-        document.querySelector('#baseline').innerHTML = ''
-        document.querySelector('#testbox').innerHTML = ''
-        for (let i = 0; i < numberOfIcons; i++) {
-          let img = document.createElement('img')
-          img.src = `images/${randomCombination[i]}.svg`
-          img.alt = randomCombination[i]
-          
-          baselineBoxImages.push(img)
-          document.querySelector('#baseline').appendChild(img)
-        }
-        
-        for (let i = 0; i < numberOfIcons; i++) {
-          let img = document.createElement('img')
-          img.src = `images/${randomCombination[i]}.svg`
-          img.alt = randomCombination[i]
-          if (i === randomWinningIcon) {
-            img.classList.add('icon-flipped')
-          }
-          document.querySelector('#testbox').appendChild(img)
-        }     
-      }
-      createImages()
-    </script>
-
-    <script>
-      let winningIcon = document.querySelector('.icon-flipped')
-      let testbox = document.querySelector('#testbox')
-      let lives = 3
-
-      testbox.addEventListener('click', function (event) {
-        console.log(event.target)
-        if (event.target === winningIcon) {
-          alert('You win!')
-          level++
-          sessionStorage.setItem('level', level)
-          // reload page
-          location.reload()
-        } else {
-          icon = event.target
-          icon.classList.add('shake');
-          lives--;
-          setTimeout(function () {
-            icon.classList.remove('shake');
-          }, 500); 
-
-        }
-
-        if (lives === 0) {
-          alert('You lose!')
-          level = 1
-          createImages()
-        }
-      })
-    </script>
+<script src="index.js"></script>
 </body>
 </html> 
