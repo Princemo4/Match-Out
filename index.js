@@ -24,6 +24,7 @@ function startTimer() {
       alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
+      resetCurrentScore()
       location.href = "./game_over.html"
     }
   }, 1000)
@@ -95,28 +96,81 @@ function getusername() {
 }
 
 function showScoreboard() {
-  let scoreElement = document.querySelector('#score')
+  let scoreElement = document.querySelector('#scoreboard')
+  console.log('showing scoreboard', scoreElement)
   let username = sessionStorage.getItem('username')
   let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
-  if (scoreboard === null) {
+  if (scoreboard === null || scoreboard.length === 0) {
     scoreElement.innerHTML = 'No scores yet'
     localStorage.setItem('scoreboard', JSON.stringify([]))
+  } else {
+    let currentScore = scoreboard.find( score => {
+      return score.username === username
+    })
+    // show the 3 highest scores
+    scoreboard.sort( (a, b) => {
+      return b.score - a.score
+    })
+    scoreboard = scoreboard.slice(0, 3)
+    let scoreboardHTML = scoreboard.map( (score) => {
+      return `<i>${score.username}: ${score.score}</i> <hr>`
+    })
+    scoreElement.innerHTML = `<hr><h3>Highest Scores</h3>`
+    scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
+
   }
 }
 
 function calculateScore(latestLevel, timeLeft) {
-  let levelScore = (latestLevel * 1000) + (timeLeft * 100)
   let username = sessionStorage.getItem('username')
-  let currentScores = JSON.parse(localStorage.getItem('scoreboard')) || []
-
-  let currentScore = currentScores.find( (score) => {
+  let scoreboard = JSON.parse(localStorage.getItem('scoreboard')) || []
+  let userScoreboardEntry = scoreboard.find( score => {
     return score.username === username
-  })
-  currentScore = currentScore || {username, score: 0}
-  score = levelScore + currentScore.score
-  let scoreEntry = [...currentScores, {username, score}]
-  localStorage.setItem('scoreboard', JSON.stringify(scoreEntry))
+  }) 
+  
+  if (userScoreboardEntry === undefined) {
+    userScoreboardEntry = {
+      username: username,
+      score: 0
+    }
+    scoreboard.push(userScoreboardEntry)
+    localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
+  }
+  let lastLevelScore = (level * 1000) + (timeLeft * 100)
+  let sessionScore = (parseInt(sessionStorage.getItem('score')) || 0) + lastLevelScore
+  sessionStorage.setItem('score', sessionScore)
 
+  if (sessionScore > userScoreboardEntry.score) {
+    userScoreboardEntry.score = sessionScore
+    console.log('scoreboard', scoreboard)
+    scoreboard.map( score => {
+      if (score.username === username) {
+        score.score = sessionScore
+      }
+      return score
+    })
+    localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
+
+  }
+
+
+}
+
+function logout() {
+  sessionStorage.removeItem('username')
+  sessionStorage.removeItem('level')
+  location.reload()
+}
+
+function displayCurrentScore() {
+  let scoreElement = document.querySelector('#score')
+  let currentScore = sessionStorage.getItem('score')
+  scoreElement.innerHTML = `<h4>Current Score: ${currentScore}</h4>`
+}
+
+function resetCurrentScore() {
+  sessionStorage.setItem('score', 0)
+  return true;
 }
 
 function changeBackground(){
@@ -127,14 +181,18 @@ function main() {
   getusername()
   displayStatus()
   showScoreboard()
+  displayCurrentScore()
   createImages()
   resizeImagesBasedOnLevel()
+  if (level > 3) {
+    setInterval(shiftIconPosition, 2000)
+  }
   testbox.addEventListener('click', function (event) {
     console.log(event.target)
     if (event.target === winningIcon) {
       clearInterval(interval)
-      alert('You win!')
       calculateScore(level, document.querySelector('#timer').innerHTML)
+      alert('You win!')
       level++
       sessionStorage.setItem('level', level)
       // reload page
@@ -154,10 +212,11 @@ function main() {
     if (lives === 0) {
       level = 1
       sessionStorage.setItem('level', level)
+      resetCurrentScore()
       location.href = "./game_over.html"
-
     }
   })
+
   startTimer()
 
 }

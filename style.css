@@ -4,6 +4,10 @@
   transform: rotate(180deg);
 }
 
+#logout {
+  margin-left: 90%
+}
+
 #game-row {
   display: flex;
   flex-wrap: wrap;
@@ -13,6 +17,11 @@
   margin: 0;
   margin-top: 1%;
   padding: 1%;
+
+}
+
+.blurred {
+  filter: blur(60px);
 
 }
 

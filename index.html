@@ -2,29 +2,36 @@
 <html>
 <head>
     <title>My First Web Page</title>
+    <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>MatchOut</h1>
-    <p>Level: <span id="level">1</span></p>
+  <div class="container text-center">
+      <h1 class="text-primary">Match Out</h1>
+      <hr>
+     <p>Level: <span id="level">1</span></p>
     <p>Lives: <span id = "lives">3</span></p>
     <div class="row">
       <!-- scoreboard -->
+      <button id="logout" onclick="logout()" class="btn btn-primary">LOGOUT</button>
 
-      <div class="box">
-        <h2>Scoreboard</h2>
-        <p>Score: <span id="score">0</span></p>
-        <p>High Score: <span id="high-score">0</span></p>
-      </div>
     </div>
-    <div id="row">
-      <p>Time Left: <span id="timer"></span></p>
+    <div id="" class="text-center">
+      <button class="btn btn-lg btn-danger" disabled>Time Left: <span id="timer"></span></button>
     </div>
-    <div id="game-row" class="row">
+    <div id="game-row" class="col-md-12">
       <div id="testbox" class="box">
 
       </div>  
     </div>
+          <div class="col-lg-12 text-center">
+            <h2 class="">Scoreboard</h2><br>
+            <p><span pan id="score"></span></p>
+            <div id="scoreboard">
+          
+            </div>
+          </div>
+    <!-- Modal -->
 <script src="index.js"></script>
 </body>
 </html> 
