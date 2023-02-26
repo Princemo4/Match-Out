@@ -8,6 +8,10 @@ let lives = 3
 let finalIcons = []
 let interval;
 
+function displayStatus(){
+  let levelShown =  document.getElementById('level')
+  levelShown.innerHTML = level
+}
 function startTimer() {
   let timer = document.querySelector('#timer')
   let time = 30
@@ -21,7 +25,7 @@ function startTimer() {
       level = 1
       sessionStorage.setItem('level', level)
       resetCurrentScore()
-      location.reload();
+      location.href = "./game_over.html"
     }
   }, 1000)
 }
@@ -169,8 +173,13 @@ function resetCurrentScore() {
   return true;
 }
 
+function changeBackground(){
+
+}
+
 function main() {
   getusername()
+  displayStatus()
   showScoreboard()
   displayCurrentScore()
   createImages()
@@ -187,11 +196,13 @@ function main() {
       level++
       sessionStorage.setItem('level', level)
       // reload page
-      location.reload()
+      location.reload();
     } else {
       icon = event.target
       icon.classList.add('shake');
       lives--;
+      let livesLeft = document.getElementById('lives')
+      livesLeft.innerHTML = lives
       setTimeout(function () {
         icon.classList.remove('shake');
       }, 500); 
@@ -199,11 +210,10 @@ function main() {
     }
 
     if (lives === 0) {
-      alert('You lose!')
       level = 1
       sessionStorage.setItem('level', level)
       resetCurrentScore()
-      location.reload();
+      location.href = "./game_over.html"
     }
   })
 
