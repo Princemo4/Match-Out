@@ -131,7 +131,8 @@ function calculateScore(latestLevel, timeLeft) {
   if (userScoreboardEntry === undefined) {
     userScoreboardEntry = {
       username: username,
-      score: 0
+      score: 0,
+      level: latestLevel
     }
     scoreboard.push(userScoreboardEntry)
     localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
