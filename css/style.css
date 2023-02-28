@@ -5,9 +5,8 @@
 }
 
 #logout {
-  margin-left: 90%
+  max-width: 100px;
 }
-
 #game-row {
   display: flex;
   flex-wrap: wrap;
@@ -85,13 +84,50 @@
     transform: translate(0, 0);
   }
 }
+
+@keyframes backgroundColorPalette {
+  0% {
+    background: #ee6055;
+  }
+
+  25% {
+    background: #60d394;
+  }
+
+  50% {
+    background: #aaf683;
+  }
+
+  75% {
+    background: #ffd97d;
+  }
+
+  100% {
+    background: #ff9b85;
+  }
+}
+
+#testbox {
+
+  animation-name: backgroundColorPalette;
+  animation-duration: 0.2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#timer-btn {
+  /* no border */
+  border: none;
+  max-width: 300px;
+}
+
 body {
   text-align: center;
-  font-family: consolas, monospace;
-  margin-top: 10%;
-  margin-bottom: 20px;
-  background-color: aquamarine;
+    font-family: consolas, monospace;
+    margin-top: 10%;
+    margin-bottom: 20px;
 }
+
 .game-title {
   color: black;
 }
@@ -110,11 +146,13 @@ body {
   width: 40%;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.btn:active {
+button:active {
 background-color: #16bc13;
 box-shadow: 0 5px #666;
 transform: translateY(4px);
 }
+
+
 .levelBtn{
   width: 20%;
   background-color: rgb(113, 59, 32);

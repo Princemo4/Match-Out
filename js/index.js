@@ -14,18 +14,33 @@ function displayStatus(){
 }
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 30
+  let time = 5
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
     timer.innerHTML = time
+    if (time < 6 && time > 0) {
+      let audio = new Audio('sounds/1sec_warning.wav')
+      audio.play()
+    }
     if (time === 0) {
+      let audio = new Audio('sounds/you_lost.wav')
+      audio.play()
       clearInterval(interval)
-      alert('You lose!')
+      // display modal with game over
+      let modal = document.querySelector('.modal')
+      modal.style.display = 'block'
+      let modalContent = document.querySelector('.modal-content')
+      modalContent.innerHTML = `
+        <h2>Game Over</h2>
+        <p>You lost all your lives</p>
+        <p>Click <a href="./index.html">here</a> to play again</p>
+      `
+
       level = 1
       sessionStorage.setItem('level', level)
       resetCurrentScore()
-      location.href = "./game_over.html"
+
     }
   }, 1000)
 }
@@ -96,29 +111,29 @@ function getusername() {
 }
 
 function showScoreboard() {
-  let scoreElement = document.querySelector('#scoreboard')
-  console.log('showing scoreboard', scoreElement)
-  let username = sessionStorage.getItem('username')
-  let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
-  if (scoreboard === null || scoreboard.length === 0) {
-    scoreElement.innerHTML = 'No scores yet'
-    localStorage.setItem('scoreboard', JSON.stringify([]))
-  } else {
-    let currentScore = scoreboard.find( score => {
-      return score.username === username
-    })
-    // show the 3 highest scores
-    scoreboard.sort( (a, b) => {
-      return b.score - a.score
-    })
-    scoreboard = scoreboard.slice(0, 3)
-    let scoreboardHTML = scoreboard.map( (score) => {
-      return `<i>${score.username}: ${score.score}</i> <hr>`
-    })
-    scoreElement.innerHTML = `<hr><h3>Highest Scores</h3>`
-    scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
+  // let scoreElement = document.querySelector('#scoreboard')
+  // console.log('showing scoreboard', scoreElement)
+  // let username = sessionStorage.getItem('username')
+  // let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
+  // if (scoreboard === null || scoreboard.length === 0) {
+  //   scoreElement.innerHTML = 'No scores yet'
+  //   localStorage.setItem('scoreboard', JSON.stringify([]))
+  // } else {
+  //   let currentScore = scoreboard.find( score => {
+  //     return score.username === username
+  //   })
+  //   // show the 3 highest scores
+  //   scoreboard.sort( (a, b) => {
+  //     return b.score - a.score
+  //   })
+  //   scoreboard = scoreboard.slice(0, 3)
+  //   let scoreboardHTML = scoreboard.map( (score) => {
+  //     return `<i>${score.username}: ${score.score}</i> <hr>`
+  //   })
+  //   scoreElement.innerHTML = `<hr><h3>Highest Scores</h3>`
+  //   scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
 
-  }
+  // }
 }
 
 function calculateScore(latestLevel, timeLeft) {
@@ -163,11 +178,11 @@ function logout() {
   location.reload()
 }
 
-function displayCurrentScore() {
-  let scoreElement = document.querySelector('#score')
-  let currentScore = sessionStorage.getItem('score')
-  scoreElement.innerHTML = `<h4>Current Score: ${currentScore}</h4>`
-}
+// function displayCurrentScore() {
+//   let scoreElement = document.querySelector('#score')
+//   let currentScore = sessionStorage.getItem('score')
+//   scoreElement.innerHTML = `<h4>Current Score: ${currentScore}</h4>`
+// }
 
 function resetCurrentScore() {
   sessionStorage.setItem('score', 0)
@@ -182,7 +197,6 @@ function main() {
   getusername()
   displayStatus()
   showScoreboard()
-  displayCurrentScore()
   createImages()
   resizeImagesBasedOnLevel()
   if (level > 3) {
@@ -193,11 +207,19 @@ function main() {
     if (event.target === winningIcon) {
       clearInterval(interval)
       calculateScore(level, document.querySelector('#timer').innerHTML)
-      alert('You win!')
+      let audio = new Audio('sounds/correct_click.wav')
+      audio.play()
+      let modal = document.querySelector('.modal')
+      modal.style.display = 'block'
+      let modalContent = document.querySelector('.modal-content')
+      modalContent.innerHTML = `
+        <h2>YOU WIN</h2>
+        <button id="next-level" onclick="location.reload()">Next Level</button>
+      `
       level++
       sessionStorage.setItem('level', level)
       // reload page
-      location.reload();
+
     } else {
       icon = event.target
       icon.classList.add('shake');

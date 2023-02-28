@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First Web Page</title>
-    <link rel="stylesheet" href="./css/bootstrap.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Out Game</title>
+    <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div class="container text-center">
-      <h1 class="text-primary">Match Out</h1>
-      <hr>
-     <p>Level: <span id="level">1</span></p>
-    <p>Lives: <span id = "lives">3</span></p>
-    <div class="row">
-      <!-- scoreboard -->
-      <button id="logout" onclick="logout()" class="btn btn-primary">LOGOUT</button>
-
-    </div>
-    <div id="" class="text-center">
-      <button class="btn btn-lg btn-danger" disabled>Time Left: <span id="timer"></span></button>
-    </div>
-    <div id="game-row" class="col-md-12">
-      <div id="testbox" class="box">
-
-      </div>  
-    </div>
-          <div class="col-lg-12 text-center">
-            <h2 class="">Scoreboard</h2><br>
-            <p><span pan id="score"></span></p>
-            <div id="scoreboard">
-          
-            </div>
-          </div>
-    <!-- Modal -->
-<script src="./js/index.js"></script>
+    <h1 class="game-title">Match Out</h1>
+    <h2>How quick is your eye?</h2>
+    <a href="game.html">
+        <button class="btn" id="btn-play">
+            Play!
+        </button>
+    </a>
+    
+    <h2> </h2>
+    <a href="instruction.html">
+        <button type="button" class="btn" id="instruction-btn">
+            Instructions
+        </button>
+    </a>
+    <h2> </h2>
+    <a href="settings.js">
+        <button class="btn" id="settings-btn">
+            Settings
+        </button>
+    </a>
+    <h2> </h2>
+    <a href="scoreboard.html">
+        <button class="btn" id="leaderboard-btn">
+            Leaderboard
+        </button>
+    </a>
 </body>
-</html> 
+</html>
