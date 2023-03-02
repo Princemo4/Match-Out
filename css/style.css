@@ -121,16 +121,39 @@
   max-width: 300px;
 }
 
+#instructions-div {
+
+  max-width: 700px;
+  margin: auto;
+
+}
+
 body {
   text-align: center;
-    font-family: consolas, monospace;
-    margin-top: 10%;
-    margin-bottom: 20px;
+  font-family: consolas, monospace;
+  margin-top: 5%;
+  margin-bottom: 20px;
 }
 
 .game-title {
   color: black;
 }
+
+.instructions-paragraph {
+  text-align: auto; 
+  margin-top: 3%;
+  margin-bottom: 5%;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#how-to-play {
+  margin-top: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-size: 20px;
+}
+
 .btn {
   display: inline-block;
   color: white;
@@ -146,6 +169,7 @@ body {
   width: 40%;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 button:active {
 background-color: #16bc13;
 box-shadow: 0 5px #666;
