@@ -1,12 +1,19 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-let level = sessionStorage.getItem('level') || 1
+let level = sessionStorage.getItem('level') || 10
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
-let lives = 3
+let lives = sessionStorage.getItem('lives') || 3
 let finalIcons = []
 let interval;
+
+let livesLeft = document.getElementById('lives')
+livesLeft.innerHTML = lives
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function displayStatus(){
   let levelShown =  document.getElementById('level')
@@ -14,21 +21,22 @@ function displayStatus(){
 }
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 5
+  let time = 9
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
     timer.innerHTML = time
     if (time < 6 && time > 0) {
-      let audio = new Audio('sounds/1sec_warning.wav')
-      audio.play()
+      playAudio('sounds/1sec_warning.wav')
     }
     if (time === 0) {
-      let audio = new Audio('sounds/you_lost.wav')
-      audio.play()
+
+      playAudio('sounds/you_lost.wav')
       clearInterval(interval)
       // display modal with game over
       let modal = document.querySelector('.modal')
+      let modalbackdrop = document.querySelector('#modal-backdrop')
+      modalbackdrop.classList.add('show')
       modal.style.display = 'block'
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
@@ -175,7 +183,10 @@ function calculateScore(latestLevel, timeLeft) {
 function logout() {
   sessionStorage.removeItem('username')
   sessionStorage.removeItem('level')
-  location.reload()
+  sessionStorage.removeItem('score')
+  sessionStorage.removeItem('lives')
+  // go to index.html
+  window.location.href = './index.html'
 }
 
 // function displayCurrentScore() {
@@ -186,11 +197,16 @@ function logout() {
 
 function resetCurrentScore() {
   sessionStorage.setItem('score', 0)
+  sessionStorage.setItem('lives', 3)
   return true;
 }
 
-function changeBackground(){
-
+function playAudio(soundfile) {
+  settings = JSON.parse(localStorage.getItem('settings')) || {}
+  if (true) {
+    let audio = new Audio(soundfile)
+    audio.play()
+  }
 }
 
 function main() {
@@ -202,15 +218,17 @@ function main() {
   if (level > 3) {
     setInterval(shiftIconPosition, 2000)
   }
-  testbox.addEventListener('click', function (event) {
+  testbox.addEventListener('click', async function (event) {
     console.log(event.target)
     if (event.target === winningIcon) {
       clearInterval(interval)
       calculateScore(level, document.querySelector('#timer').innerHTML)
-      let audio = new Audio('sounds/correct_click.wav')
-      audio.play()
+      winningIcon.classList.remove('icon-flipped')
+      playAudio('sounds/correct_click.wav')
       let modal = document.querySelector('.modal')
       modal.style.display = 'block'
+      let modalbackdrop = document.querySelector('#modal-backdrop')
+      modalbackdrop.classList.add('show')
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
         <h2>YOU WIN</h2>
@@ -224,19 +242,30 @@ function main() {
       icon = event.target
       icon.classList.add('shake');
       lives--;
+      playAudio('sounds/wrong_click.wav')
+      sessionStorage.setItem('lives', lives)
       let livesLeft = document.getElementById('lives')
       livesLeft.innerHTML = lives
       setTimeout(function () {
         icon.classList.remove('shake');
       }, 500); 
-
     }
 
     if (lives === 0) {
       level = 1
       sessionStorage.setItem('level', level)
       resetCurrentScore()
-      location.href = "./game_over.html"
+      let modal = document.querySelector('.modal')
+      modal.style.display = 'block'
+      let modalbackdrop = document.querySelector('#modal-backdrop')
+      modalbackdrop.classList.add('show')
+      let modalContent = document.querySelector('.modal-content')
+      modalContent.innerHTML = `
+        <h2>GAME OVER!</h2>
+        <h2>YOU ARE OUT OF LIVES!</h2>
+        <button id="next-level" onclick="location.reload()">PLAY AGAIN</button>
+      `
+      clearInterval(interval)
     }
   })
 

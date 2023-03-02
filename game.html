@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+ 
   <div class="container text-center">
       <h1 class="text-primary">Match Out</h1>
       <hr>
-     <p>Level: <span id="level">1</span></p>
-    <p>Lives: <span id = "lives">3</span></p>
+     <p>Level: <span id="level"></span></p>
+    <p>Lives: <span id = "lives"></span></p>
     <div class="text-center">
       <!-- scoreboard -->
       <button id="logout" onclick="logout()" class="btn btn-primary btn-sm">EXIT</button>
@@ -27,6 +28,7 @@
 
     <!-- Modal -->
     <!-- Modal that displays "YOU WIN" message -->
+    <div id="modal-backdrop" class=""></div>
 
     <div class="modal" id="winModal" tabindex="-1" role="dialog" aria-labelledby="winModalLabel" aria-hidden="">
       <div class="modal-dialog" role="document">

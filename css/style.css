@@ -4,9 +4,29 @@
   transform: rotate(180deg);
 }
 
+.game-icon {
+      transition: 0.6s;
+        transform-style: preserve-3d;
+      
+        position: relative;
+}
+
+#modal-backdrop.show {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+  transition: opacity 0.15s linear;
+  opacity: 0.5;
+}
+
 #logout {
   max-width: 100px;
 }
+
 #game-row {
   display: flex;
   flex-wrap: wrap;
@@ -171,9 +191,9 @@ body {
 }
 
 button:active {
-background-color: #16bc13;
-box-shadow: 0 5px #666;
-transform: translateY(4px);
+  background-color: #16bc13;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 
