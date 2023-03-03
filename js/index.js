@@ -23,7 +23,7 @@ function displayStatus(){
 }
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 90
+  let time = 20
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
@@ -42,9 +42,11 @@ function startTimer() {
       modal.style.display = 'block'
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
-        <h2>Game Over</h2>
-        <p>You lost all your lives</p>
-        <p>Click <a href="./index.html">here</a> to play again</p>
+        <h2 class="text-danger">Game Over</h2>
+        <br>
+        <h4>Time Ran Out</h4>
+        <hr>
+        <button href="#" onclick="location.reload()" >Play Again</button> 
       `
 
       level = 1
@@ -297,11 +299,12 @@ function main() {
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
         <h2>YOU WIN</h2>
-        <h4>Points earned for level: ${levelPoints}</h4>
-        <h4>Points earned for time left: ${timePoints}</h4>
-        <h4>Total points earned: ${levelPoints + timePoints}</h4>
+        <br>
+        <h4>Level Points: ${levelPoints}</h4>
+        <h4>Time Points: ${timePoints}</h4>
+        <h4 class="text-primary"><strong>Total Points: ${levelPoints + timePoints}</strong></h4>
         <hr>
-        <button id="next-level" onclick="location.reload()">Next Level</button>
+        <h4><button id="next-level" onclick="location.reload()">Next Level</button></h4>
       `
       level++
       sessionStorage.setItem('level', level)
@@ -331,9 +334,10 @@ function main() {
       modalbackdrop.classList.add('show')
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
-        <h2>GAME OVER!</h2>
-        <h2>YOU ARE OUT OF LIVES!</h2>
-        <button id="next-level" onclick="location.reload()">PLAY AGAIN</button>
+        <h2 class="text-danger">GAME OVER</h2>
+        <h3>YOU ARE OUT OF LIVES</h3>
+        <hr>
+        <button id="next-level" onclick="location.reload()" >PLAY AGAIN</button>
       `
       clearInterval(interval)
     }
