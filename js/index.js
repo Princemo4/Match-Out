@@ -15,6 +15,8 @@ function sleep(ms) {
 
 function displayStatus(){
   let levelShown =  document.getElementById('level')
+  let scoreElement = document.querySelector('#score')
+  scoreElement.innerHTML = sessionStorage.getItem('score') || 0
   levelShown.innerHTML = level
 }
 function startTimer() {
