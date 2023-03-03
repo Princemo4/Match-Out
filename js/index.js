@@ -160,6 +160,11 @@ function getusername() {
     return;
   }
   let username = prompt('Please enter your username')
+  if (username === null) {
+    window.location.href = 'index.html';
+    return;
+  }  
+
   sessionStorage.setItem('username', username)
   let users = JSON.parse(localStorage.getItem('users'))
   if (users === null ) {
@@ -257,10 +262,11 @@ function resetCurrentScore() {
   return true;
 }
 
-function playAudio(soundfile) {
+function playAudio(soundfile, loop = false) {
   settings = JSON.parse(localStorage.getItem('settings')) || {}
   if (true) {
     let audio = new Audio(soundfile)
+    audio.loop = loop
     audio.play()
   }
 }
@@ -277,6 +283,7 @@ function displayLives() {
 
 function main() {
   getusername()
+  playAudio('sounds/game-background-music.wav', true)
   displayStatus()
   showScoreboard()
   createImages()
