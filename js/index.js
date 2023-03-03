@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-let level = sessionStorage.getItem('level') || 10
+let level = sessionStorage.getItem('level') || 1
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
@@ -8,8 +8,6 @@ let lives = sessionStorage.getItem('lives') || 3
 let finalIcons = []
 let interval;
 
-let livesLeft = document.getElementById('lives')
-livesLeft.innerHTML = lives
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -21,7 +19,7 @@ function displayStatus(){
 }
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 9
+  let time = 90
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
@@ -54,9 +52,52 @@ function startTimer() {
 }
 
 function resizeImagesBasedOnLevel() {
-  if (level > 0) {
-    let imageWidth = (100 / level) < 4 ? 4 : (100 / level)
-    imageWidth = imageWidth > 20 ? 20 : imageWidth
+  // each level increases by 3x the number of icons
+  // switch (level) {
+  //   case 1:
+  //     imageWidth = 33
+  //     break;
+  //   case 2:
+  //     imageWidth = 100 / 6
+  //     break;
+  //   case 3:
+  //     numberOfIcons = 9
+  //     break;
+  //   case 4:
+  //     numberOfIcons = 12
+  //     break;
+  //   case 5:
+  //     numberOfIcons = 15
+  //     break;
+  //   default:
+  //     numberOfIcons = 18
+  //     break;
+  // }
+
+  if (level >= 0) {
+    let imageWidth;
+    let numberOfIcons = document.querySelectorAll('.game-icon').length
+    if (numberOfIcons == 3) {
+      imageWidth = 25
+    }
+    if (numberOfIcons == 6) {
+      imageWidth = 100 / 6
+    }
+    if (numberOfIcons == 9) {
+      imageWidth = 19
+    }
+    if (numberOfIcons == 12) {
+      imageWidth = 100 / (12 / 2) 
+    } 
+
+    if (numberOfIcons == 15) {
+      imageWidth = 100 / (15 / 3) 
+    }
+
+    if (numberOfIcons > 15) {
+      imageWidth = (100 / level) < 4 ? 4 : (100 / level)
+    }
+
     let images = document.querySelectorAll('.game-icon')
     images.forEach( (image) => {
       image.style.width = `${imageWidth}%`
@@ -71,7 +112,7 @@ function shiftIconPosition() {
   // clear the current images
   document.querySelector('#testbox').innerHTML = ''
   // redraw the images
-  finalIcons.forEach( (icon) => {
+  finalIcons.forEach( (icon, index) => {
     document.querySelector('#testbox').appendChild(icon)
   })
 }
@@ -84,19 +125,25 @@ function createImages() {
     let tempArray1 = sampleIcons.sort(() => Math.random() - 0.5)
     randomCombination.push(...tempArray1)
   }
-  console.log(randomCombination)
-  // clear the current images
-  document.querySelector('#testbox').innerHTML = ''
-  
+
+  let testbox = document.querySelector('#testbox')
+  testbox.innerHTML = ''
+  // get textbox width
+  let textboxWidth = testbox.offsetWidth
+  // fill the textbox with images
+  let imagesize = textboxWidth / numberOfIcons
+  console.log('imagesize ', imagesize)
   for (let i = 0; i < numberOfIcons; i++) {
     let img = document.createElement('img')
     img.src = `images/${randomCombination[i]}.svg`
     img.alt = randomCombination[i]
     img.classList.add('game-icon')
+    
     if (i === randomWinningIcon) {
       img.classList.add('icon-flipped')
       winningIcon = img
     }
+
     document.querySelector('#testbox').appendChild(img)
     finalIcons.push(img)
   }     
@@ -209,12 +256,23 @@ function playAudio(soundfile) {
   }
 }
 
+function displayLives() {
+  let livesElement = document.querySelector('#lives')
+  let heart = document.createElement('img')
+  heart.src = 'images/heart.png'
+  livesElement.innerHTML = ''
+  for (let i = 0; i < lives; i++) {
+    livesElement.appendChild(heart.cloneNode())
+  }
+}
+
 function main() {
   getusername()
   displayStatus()
   showScoreboard()
   createImages()
   resizeImagesBasedOnLevel()
+  displayLives()
   if (level > 3) {
     setInterval(shiftIconPosition, 2000)
   }
@@ -244,8 +302,9 @@ function main() {
       lives--;
       playAudio('sounds/wrong_click.wav')
       sessionStorage.setItem('lives', lives)
-      let livesLeft = document.getElementById('lives')
-      livesLeft.innerHTML = lives
+      // let livesLeft = document.getElementById('lives')
+      // livesLeft.innerHTML = lives
+      displayLives()
       setTimeout(function () {
         icon.classList.remove('shake');
       }, 500); 

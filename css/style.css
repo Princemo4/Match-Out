@@ -25,6 +25,9 @@
 
 #logout {
   max-width: 100px;
+  font-size: medium;
+  padding: 10px !important;
+  height: 50px;
 }
 
 #game-row {
@@ -139,6 +142,10 @@
   /* no border */
   border: none;
   max-width: 300px;
+  position: fixed;
+  z-index: 99;
+  top: 5%;
+  right: 5%;
 }
 
 #instructions-div {
@@ -151,9 +158,11 @@
 body {
   text-align: center;
   font-family: consolas, monospace;
-  margin-top: 5%;
+  margin-top: 1%;
   margin-bottom: 20px;
 }
+
+
 
 .game-title {
   color: black;
