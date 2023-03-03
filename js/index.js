@@ -7,6 +7,8 @@ let testbox = document.querySelector('#testbox')
 let lives = sessionStorage.getItem('lives') || 3
 let finalIcons = []
 let interval;
+let levelPoints = 0;
+let timePoints = 0;
 
 
 function sleep(ms) {
@@ -209,7 +211,10 @@ function calculateScore(latestLevel, timeLeft) {
     scoreboard.push(userScoreboardEntry)
     localStorage.setItem('scoreboard', JSON.stringify(scoreboard))
   }
-  let lastLevelScore = (level * 1000) + (timeLeft * 100)
+  levelPoints = (latestLevel * 1000)
+  timePoints = (timeLeft * 100)
+
+  let lastLevelScore = levelPoints + timePoints
   let sessionScore = (parseInt(sessionStorage.getItem('score')) || 0) + lastLevelScore
   sessionStorage.setItem('score', sessionScore)
 
@@ -292,6 +297,10 @@ function main() {
       let modalContent = document.querySelector('.modal-content')
       modalContent.innerHTML = `
         <h2>YOU WIN</h2>
+        <h4>Points earned for level: ${levelPoints}</h4>
+        <h4>Points earned for time left: ${timePoints}</h4>
+        <h4>Total points earned: ${levelPoints + timePoints}</h4>
+        <hr>
         <button id="next-level" onclick="location.reload()">Next Level</button>
       `
       level++
