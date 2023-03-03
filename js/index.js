@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-let level = sessionStorage.getItem('level') || 1
+let level = sessionStorage.getItem('level') || 20
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
@@ -283,7 +283,8 @@ function main() {
   resizeImagesBasedOnLevel()
   displayLives()
   if (level > 3) {
-    setInterval(shiftIconPosition, 2000)
+    let speed = 9000 / level 
+    setInterval(shiftIconPosition, speed)
   }
   testbox.addEventListener('click', async function (event) {
     console.log(event.target)
