@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-let level = sessionStorage.getItem('level') || 20
+let level = sessionStorage.getItem('level') || 4
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')
@@ -9,10 +9,29 @@ let finalIcons = []
 let interval;
 let levelPoints = 0;
 let timePoints = 0;
+let speed;
+
+let backgroundAudio;
 
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function adjustDifficulty() {
+  if (level >= 5) {
+    // start shifting the images
+    speed = 9000 / level 
+    setInterval(shiftIconPosition, speed)
+    testbox.classList.add('shift-images')
+  }
+  if (level >= 10) {
+    // start animating the background
+    testbox.classList.add('animage-background')
+    testbox.style.animationDuration = 7 / level + 's'
+  }
+  
+
 }
 
 function displayStatus(){
@@ -21,9 +40,10 @@ function displayStatus(){
   scoreElement.innerHTML = sessionStorage.getItem('score') || 0
   levelShown.innerHTML = level
 }
+
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 20
+  let time = 100
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
@@ -48,7 +68,7 @@ function startTimer() {
         <hr>
         <button href="#" onclick="location.reload()" >Play Again</button> 
       `
-
+      backgroundAudio.pause()
       level = 1
       sessionStorage.setItem('level', level)
       resetCurrentScore()
@@ -92,12 +112,12 @@ function resizeImagesBasedOnLevel() {
     if (numberOfIcons == 9) {
       imageWidth = 19
     }
-    if (numberOfIcons == 12) {
-      imageWidth = 100 / (12 / 2) 
+    if (numberOfIcons == 12) { 
+      imageWidth = 100 / (12 / 2)
     } 
 
     if (numberOfIcons == 15) {
-      imageWidth = 100 / (15 / 3) 
+      imageWidth = 100 / (15 / 3)
     }
 
     if (numberOfIcons > 15) {
@@ -268,6 +288,7 @@ function playAudio(soundfile, loop = false) {
     let audio = new Audio(soundfile)
     audio.loop = loop
     audio.play()
+    return audio;
   }
 }
 
@@ -283,15 +304,15 @@ function displayLives() {
 
 function main() {
   getusername()
-  playAudio('sounds/game-background-music.wav', true)
+  backgroundAudio = playAudio('sounds/game-background-music.wav', true)
+  adjustDifficulty()
   displayStatus()
   showScoreboard()
   createImages()
   resizeImagesBasedOnLevel()
   displayLives()
-  if (level > 3) {
-    let speed = 9000 / level 
-    setInterval(shiftIconPosition, speed)
+  if (level >= 5) {
+
   }
   testbox.addEventListener('click', async function (event) {
     console.log(event.target)
@@ -314,6 +335,7 @@ function main() {
         <hr>
         <h4><button id="next-level" onclick="location.reload()">Next Level</button></h4>
       `
+      backgroundAudio.pause()
       level++
       sessionStorage.setItem('level', level)
       // reload page
@@ -347,6 +369,7 @@ function main() {
         <hr>
         <button id="next-level" onclick="location.reload()" >PLAY AGAIN</button>
       `
+      backgroundAudio.pause()
       clearInterval(interval)
     }
   })

@@ -136,7 +136,7 @@
   }
 }
 
-#testbox {
+.animage-background {
 
   animation-name: backgroundColorPalette;
   animation-duration: 0.2s;
