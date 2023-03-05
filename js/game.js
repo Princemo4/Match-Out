@@ -10,9 +10,7 @@ let interval;
 let levelPoints = 0;
 let timePoints = 0;
 let speed;
-
 let backgroundAudio;
-
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -196,8 +194,6 @@ function getusername() {
   }
 }
 
-
-
 function calculateScore(latestLevel, timeLeft) {
   let username = sessionStorage.getItem('username')
   let scoreboard = JSON.parse(localStorage.getItem('scoreboard')) || []
@@ -246,7 +242,6 @@ function logout() {
   window.location.href = './index.html'
 }
 
-
 function resetCurrentScore() {
   sessionStorage.setItem('score', 0)
   sessionStorage.setItem('lives', 3)
@@ -274,17 +269,28 @@ function displayLives() {
 }
 
 function main() {
+  // get username and check if the user exists
   getusername()
-  backgroundAudio = playAudio('sounds/game-background-music.wav', true)
-  adjustDifficulty()
-  displayStatus()
-  showScoreboard()
-  createImages()
-  resizeImagesBasedOnLevel()
-  displayLives()
-  if (level >= 5) {
 
-  }
+  // start the background music
+  backgroundAudio = playAudio('sounds/game-background-music.wav', true)
+
+  // adjust difficulty based on level
+  adjustDifficulty()
+
+  // display the status of the user: level, score, lives
+  displayStatus()
+
+  // generate the images
+  createImages()
+
+  // resize the images based on the level to make it fit the screen
+  resizeImagesBasedOnLevel()
+
+  // display the hearts icon for the number of lives
+  displayLives()
+
+  // Listen for user clicks on the icons
   testbox.addEventListener('click', async function (event) {
     console.log(event.target)
     if (event.target === winningIcon) {
@@ -344,8 +350,10 @@ function main() {
     }
   })
 
+  // start the timer once all of the above is ready
   startTimer()
 
 }
 
+// start the game
 main()
