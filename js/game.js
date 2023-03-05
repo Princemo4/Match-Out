@@ -199,6 +199,7 @@ function calculateScore(latestLevel, timeLeft) {
     return score.username === username
   }) 
   
+
   if (userScoreboardEntry === undefined) {
     userScoreboardEntry = {
       username: username,
@@ -211,6 +212,10 @@ function calculateScore(latestLevel, timeLeft) {
   levelPoints = (latestLevel * 1000)
   timePoints = (timeLeft * 100)
 
+  if (userScoreboardEntry.level > latestLevel) {
+    latestLevel = userScoreboardEntry.level
+  }
+
   let lastLevelScore = levelPoints + timePoints
   let sessionScore = (parseInt(sessionStorage.getItem('score')) || 0) + lastLevelScore
   sessionStorage.setItem('score', sessionScore)
@@ -221,6 +226,7 @@ function calculateScore(latestLevel, timeLeft) {
     scoreboard.map( score => {
       if (score.username === username) {
         score.score = sessionScore
+        score.level = latestLevel
       }
       return score
     })
