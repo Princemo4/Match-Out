@@ -1,6 +1,6 @@
 let sampleIcons = ['smurf', 'amethyst', 'catwoman', 'keiji', 'peter_pan', 'avatar', 'cookie_monster', 'dobby', 'harry_potter', 'joker', 'stan_marsh', 'trinity', 'undyne', 'wonder_woman', 'yoda']
 let baselineBoxImages = []
-let level = sessionStorage.getItem('level') || 4
+let level = sessionStorage.getItem('level') || 1
 let numberOfIcons = level * 3
 let winningIcon;
 let testbox = document.querySelector('#testbox')

@@ -1,4 +1,17 @@
-    let storedScoreboard = JSON.parse(localStorage.getItem("scoreboard")).sort((a, b) => b.score - a.score);
+    let scores = [{"username":"max_verstappen","score":8583777,"level":18},{"username":"charles_leclerc","score":3583000,"level":8},{"username":"sergio_perez","score":3050000,"level":7},{"username":"george_russell","score":2750000,"level":14},{"username":"lance_stroll","score":2640000,"level":6},{"username":"lewis_hamilton","score":2580000,"level":9},{"username":"valtteri_bottas","score":2550000,"level":10},{"username":"pierre_gasly","score":2332000,"level":5}];
+
+    
+    let storedScoreboard = JSON.parse(localStorage.getItem("scoreboard"))
+
+    if (storedScoreboard && storedScoreboard.length > 0) {
+      //do nothing
+      storedScoreboard = storedScoreboard.sort((a, b) => b.score - a.score)
+    } else {
+      localStorage.setItem("scoreboard", JSON.stringify(scores));
+      storedScoreboard = scores.sort((a, b) => b.score - a.score);
+    }
+
+
     let scoreboardTable = document.getElementById("scoreboard-table");
     
     for (let i = 0; i < storedScoreboard.length; i++) {
