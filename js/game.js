@@ -11,6 +11,7 @@ let levelPoints = 0;
 let timePoints = 0;
 let speed;
 let backgroundAudio;
+let time = 30
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -28,8 +29,6 @@ function adjustDifficulty() {
     testbox.classList.add('animage-background')
     testbox.style.animationDuration = 7 / level + 's'
   }
-  
-
 }
 
 function displayStatus(){
@@ -41,7 +40,6 @@ function displayStatus(){
 
 function startTimer() {
   let timer = document.querySelector('#timer')
-  let time = 100
   timer.innerHTML = time
   interval = setInterval(function () {
     time--
