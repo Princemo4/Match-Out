@@ -196,31 +196,7 @@ function getusername() {
   }
 }
 
-function showScoreboard() {
-  // let scoreElement = document.querySelector('#scoreboard')
-  // console.log('showing scoreboard', scoreElement)
-  // let username = sessionStorage.getItem('username')
-  // let scoreboard = JSON.parse(localStorage.getItem('scoreboard'))
-  // if (scoreboard === null || scoreboard.length === 0) {
-  //   scoreElement.innerHTML = 'No scores yet'
-  //   localStorage.setItem('scoreboard', JSON.stringify([]))
-  // } else {
-  //   let currentScore = scoreboard.find( score => {
-  //     return score.username === username
-  //   })
-  //   // show the 3 highest scores
-  //   scoreboard.sort( (a, b) => {
-  //     return b.score - a.score
-  //   })
-  //   scoreboard = scoreboard.slice(0, 3)
-  //   let scoreboardHTML = scoreboard.map( (score) => {
-  //     return `<i>${score.username}: ${score.score}</i> <hr>`
-  //   })
-  //   scoreElement.innerHTML = `<hr><h3>Highest Scores</h3>`
-  //   scoreElement.innerHTML += `<p>${scoreboardHTML.join('')}</p>`
 
-  // }
-}
 
 function calculateScore(latestLevel, timeLeft) {
   let username = sessionStorage.getItem('username')
@@ -270,11 +246,6 @@ function logout() {
   window.location.href = './index.html'
 }
 
-// function displayCurrentScore() {
-//   let scoreElement = document.querySelector('#score')
-//   let currentScore = sessionStorage.getItem('score')
-//   scoreElement.innerHTML = `<h4>Current Score: ${currentScore}</h4>`
-// }
 
 function resetCurrentScore() {
   sessionStorage.setItem('score', 0)
@@ -346,8 +317,7 @@ function main() {
       lives--;
       playAudio('sounds/wrong_click.wav')
       sessionStorage.setItem('lives', lives)
-      // let livesLeft = document.getElementById('lives')
-      // livesLeft.innerHTML = lives
+
       displayLives()
       setTimeout(function () {
         icon.classList.remove('shake');
