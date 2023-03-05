@@ -8,14 +8,14 @@
 <body>
  
   <div class="container text-center">
-      <h1 class="text-primary">Flipped Out</h1>
+      <h1 id="title" class="text-primary text-center">FLIPPED OUT</h1>
       <hr>
      <p>Level: <span id="level"></span></p> <p> Score: <span id="score"></span></p>
      <div class="text-center">
        <!-- scoreboard -->
-       <a id="logout" onclick="logout()" class="btn btn-primary">EXIT 
-        
-       </a>  
+          <div id="" class="text-center">
+            <a id="end-session" class="btn btn-primary text-center" onclick="logout()">END SESSION</a>
+          </div>
        <hr>
     <h4>Lives: <br><span id="lives"></span></h4>
     </div>
@@ -27,6 +27,7 @@
     <div id="" class="text-center">
       <a id="timer-btn" class="btn btn-danger text-center" disabled>Time Left: <span id="timer"></span></a>
     </div>
+
 
     <!-- Modal -->
     <!-- Modal that displays "YOU WIN" message -->
@@ -52,5 +53,6 @@
         </div>
       </div>
 <script src="./js/index.js"></script>
+<script src="./js/game.js"></script>
 </body>
 </html> 
