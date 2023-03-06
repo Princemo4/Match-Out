@@ -19,9 +19,6 @@ jobs:
           
       - name: sync files
         run: |
-          aws s3 sync $LOCAL_PATH s3://$BUCKET_NAME --acl public-read
-        env:
-          LOCAL_PATH: ~/Match-Out
-          BUCKET_NAME: flippedoutgame
+          aws s3 sync /tmp/Match-Out s3://flippedoutgame --acl public-read
       - name: Cleanup
-        run: rm -rf $LOCAL_PATH
+        run: rm -rf /tmp/Match-Out
