@@ -19,6 +19,18 @@ jobs:
           
       - name: sync files
         run: |
-          aws s3 sync . s3://flippedoutgame --acl public-read
-      - name: Cleanup
-        run: rm -rf .
+          aws s3 sync . s3://flippedoutgame  \
+          --exclude ".git/*" \
+          --exclude ".github/*" \
+          --exclude "README.md" \
+          --exclude "example_scores.html" \
+          --exclude ".vscode/*" \
+          --include "*.html" \
+          --include "css/*" \
+          --include "js/*" \
+          --include "images/*" \
+          --include "sounds/*" \
+          --acl public-read 
+
+      - name: Complete
+        run: echo "Sync complete"
