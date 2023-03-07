@@ -22,9 +22,6 @@ document.onkeydown = function (e){
       } else {
         return
       }
-    } else {
-      location.href = 'index.html'
-  
-    }
+    } 
   }
 }
