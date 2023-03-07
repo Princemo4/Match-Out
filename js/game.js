@@ -32,6 +32,7 @@ function adjustDifficulty() {
 }
 
 function displayStatus(){
+  //this is just to display the level and score the user is in
   let levelShown =  document.getElementById('level')
   let scoreElement = document.querySelector('#score')
   scoreElement.innerHTML = sessionStorage.getItem('score') || 0
@@ -45,10 +46,11 @@ function startTimer() {
     time--
     timer.innerHTML = time
     if (time < 6 && time > 0) {
+      //when there's five seconds left, there will be a countdown sound
       playAudio('sounds/1sec_warning.wav')
     }
     if (time === 0) {
-
+      //events when time runs out.
       playAudio('sounds/you_lost.wav')
       clearInterval(interval)
       // display modal with game over
@@ -99,6 +101,7 @@ function resizeImagesBasedOnLevel() {
   if (level >= 0) {
     let imageWidth;
     let numberOfIcons = document.querySelectorAll('.game-icon').length
+    //trying to size the picture to fit the screen 
     if (numberOfIcons == 3) {
       imageWidth = 25
     }
@@ -140,6 +143,7 @@ function shiftIconPosition() {
 }
 
 function createImages() {
+  //the array is here randomized
   let randomWinningIcon = Math.floor(Math.random() * numberOfIcons)
   let randomCombination = []
 
@@ -162,6 +166,7 @@ function createImages() {
     img.classList.add('game-icon')
     
     if (i === randomWinningIcon) {
+
       img.classList.add('icon-flipped')
       winningIcon = img
     }
@@ -176,6 +181,7 @@ function getusername() {
     return;
   }
   let username = prompt('Please enter your username')
+  //if there is no username entered, payer will be redirected to homepage
   if (username === null) {
     window.location.href = 'index.html';
     return;
@@ -187,6 +193,7 @@ function getusername() {
     users = []
   }
   if (users.indexOf(username) === -1) {
+    //adds user to user list
     users.push(username)
     localStorage.setItem('users', JSON.stringify(users))
   }
