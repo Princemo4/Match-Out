@@ -19,6 +19,6 @@ jobs:
           
       - name: sync files
         run: |
-          aws s3 sync /tmp/Match-Out s3://flippedoutgame --acl public-read
+          aws s3 sync . s3://flippedoutgame --acl public-read
       - name: Cleanup
-        run: rm -rf /tmp/Match-Out
+        run: rm -rf .
